@@ -8,6 +8,8 @@ replace (
 	github.com/knative/pkg => github.com/rancher/pkg v0.0.0-20190514055449-b30ab9de040e
 	github.com/matryer/moq => github.com/rancher/moq v0.0.0-20200712062324-13d1f37d2d77
 	github.com/opencontainers/runc => github.com/opencontainers/runc v1.0.0-rc10
+	github.com/rancher/aks-operator => github.com/mjura/aks-operator v0.0.0-20210204130219-1e1acc36e366
+ 	github.com/rancher/aks-operator/controller => github.com/mjura/aks-operator/controller v0.0.0-20210204130219-1e1acc36e366
 	github.com/rancher/rancher/pkg/apis => ./pkg/apis
 	github.com/rancher/rancher/pkg/client => ./pkg/client
 	golang.org/x/sys => golang.org/x/sys v0.0.0-20190921190940-14da1ac737cc // This is because docker/docker/pkg/archive has a dependency on an old x/sys
@@ -41,10 +43,11 @@ replace (
 )
 
 require (
-	github.com/Azure/azure-sdk-for-go v43.0.0+incompatible
-	github.com/Azure/go-autorest/autorest v0.11.1
-	github.com/Azure/go-autorest/autorest/adal v0.9.5
-	github.com/Azure/go-autorest/autorest/to v0.3.1-0.20191028180845-3492b2aff503
+	github.com/Azure/azure-sdk-for-go v50.0.1-0.20210114072321-4a06a7dc9c3c+incompatible
+	github.com/Azure/go-autorest/autorest v0.11.16
+	github.com/Azure/go-autorest/autorest/adal v0.9.11-0.20210111195520-9fc88b15294e
+	github.com/Azure/go-autorest/autorest/to v0.4.1-0.20210111195520-9fc88b15294e
+	github.com/Azure/go-autorest/autorest/validation v0.3.2-0.20210111195520-9fc88b15294e // indirect
 	github.com/DataDog/zstd v1.4.5 // indirect
 	github.com/Masterminds/semver/v3 v3.1.0
 	github.com/Masterminds/sprig/v3 v3.1.0

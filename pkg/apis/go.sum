@@ -545,6 +545,7 @@ github.com/prometheus/procfs v0.2.0 h1:wH4vA7pcjKuZzjF7lM8awk4fnuJO6idemZXoKnULU
 github.com/prometheus/procfs v0.2.0/go.mod h1:lV6e/gmhEcM9IjHGsFOCxxuZ+z1YqCvr4OA4YeYWdaU=
 github.com/prometheus/tsdb v0.7.1/go.mod h1:qhTCs0VvXwvX/y3TZrWD7rabWM+ijKTux40TwIPHuXU=
 github.com/qri-io/starlib v0.4.2-0.20200213133954-ff2e8cd5ef8d/go.mod h1:7DPO4domFU579Ga6E61sB9VFNaniPVwJP5C4bBCu3wA=
+github.com/rancher/aks-operator v0.0.0-20210111093411-a37329f0798d h1:lepHA8dZu2fmxuGvGCiQCpcYZow1CM9YUe33jL8zmfA=
 github.com/rancher/eks-operator v1.0.6-rc1 h1:VY2lLcaHtBMByd7pq7px4fB+GW0cd0cfessODbmH+Tc=
 github.com/rancher/eks-operator v1.0.6-rc1/go.mod h1:GB2kyPtIN0r+DGlUcDgEUMsB4qRwZH7OKsraemZT+GA=
 github.com/rancher/lasso v0.0.0-20200427171700-e0509f89f319/go.mod h1:6Dw19z1lDIpL887eelVjyqH/mna1hfR61ddCFOG78lw=
@@ -559,9 +560,24 @@ github.com/rancher/norman v0.0.0-20200930000340-693d65aaffe3 h1:e+5LQet2639Fal5V
 github.com/rancher/norman v0.0.0-20200930000340-693d65aaffe3/go.mod h1:hhnf77V2lmZD7cvUqi4vTBpIs3KpHNL/AmuN0MqEClI=
 github.com/rancher/rke v1.2.0-rc9.0.20210106190313-91aed199f04c h1:yi5cJS9Hm60E+GUi8fvl4i42ZJIsR8qUz8TOv1+AYhA=
 github.com/rancher/rke v1.2.0-rc9.0.20210106190313-91aed199f04c/go.mod h1:osU/R8vPjgV3AwNnPamC0eOZ6aI0UfpHTyZ5K/b/vZE=
+<<<<<<< HEAD
 github.com/rancher/rke v1.2.0-rc9.0.20210125120943-eb9922d52aeb h1:fgfHjg7LzAoNDPO9y7ZaKbUyQIQ7phinIWyJ0D9Oe1A=
 github.com/rancher/rke v1.2.0-rc9.0.20210125120943-eb9922d52aeb/go.mod h1:osU/R8vPjgV3AwNnPamC0eOZ6aI0UfpHTyZ5K/b/vZE=
 github.com/rancher/wrangler v0.6.2-0.20200427172034-da9b142ae061 h1:oash8kayb/AlGop5KPn/cjUZv2m7oKMU3mwTNqd126c=
+=======
+github.com/rancher/rke v1.2.4-rc8 h1:Q4dEAlO4fmRNRepV/Fc/NCB24MBUkujeoeZ0/cW47JM=
+github.com/rancher/rke v1.2.4-rc8/go.mod h1:cBs0GcHGSDfdHpA3ElCU4B0E4dnQSEAIKBHbYC6Ngew=
+github.com/rancher/rke v1.2.5-0.20210112215032-efe7164b7233 h1:Qwz1WXUeFRu9iFrxWr7QzHU8EUKMtfwgYWiRPGnsOe8=
+github.com/rancher/rke v1.2.5-0.20210112215032-efe7164b7233/go.mod h1:osU/R8vPjgV3AwNnPamC0eOZ6aI0UfpHTyZ5K/b/vZE=
+github.com/rancher/rke v1.2.5-rc1 h1:sLf8RWI2PfT4tJ2HJselUO1HlA1sT6eyNDZXcPLyy2Q=
+github.com/rancher/rke v1.2.5-rc1/go.mod h1:osU/R8vPjgV3AwNnPamC0eOZ6aI0UfpHTyZ5K/b/vZE=
+github.com/rancher/rke v1.2.5-rc1.0.20210121191013-39c1e093d6f9 h1:tOaRN+pixJc+DQ4HA2eu5zc4tTPpy8te/4oCrIwtChg=
+github.com/rancher/rke v1.2.5-rc1.0.20210121191013-39c1e093d6f9/go.mod h1:osU/R8vPjgV3AwNnPamC0eOZ6aI0UfpHTyZ5K/b/vZE=
+github.com/rancher/rke v1.2.5 h1:heviUpdOdUoEpKaysJdkrUih1gAF7zMy6QpYl3+w0u4=
+github.com/rancher/rke v1.2.5/go.mod h1:osU/R8vPjgV3AwNnPamC0eOZ6aI0UfpHTyZ5K/b/vZE=
+github.com/rancher/rke v1.2.6-rc2 h1:lUXQtHD1eCFOcqwjMf/TxdDwmvSJxIzX5/OgsScgKMY=
+github.com/rancher/rke v1.2.6-rc2/go.mod h1:osU/R8vPjgV3AwNnPamC0eOZ6aI0UfpHTyZ5K/b/vZE=
+>>>>>>> 69cb09337... Add AKS integration controller
 github.com/rancher/wrangler v0.6.2-0.20200427172034-da9b142ae061/go.mod h1:n5Du/gGD7WoiqnEo0SHnPirDIp1V9Zu+6guc8lXS2dk=
 github.com/rancher/wrangler v0.6.2-0.20200515155908-1923f3f8ec3f h1:QPOlhiY3YCPLsEtOmPam+ghtqip/f/zsfz4F4PF70D8=
 github.com/rancher/wrangler v0.6.2-0.20200515155908-1923f3f8ec3f/go.mod h1:NmtmlLkchboIksYJuBemwcP4RBfv8FpeyhVoWXB9Wdc=

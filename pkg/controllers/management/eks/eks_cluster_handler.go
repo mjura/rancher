@@ -691,12 +691,12 @@ func generateSAToken(endpoint, ca, token string, dialer typesDialer.Dialer) (str
 		Dial:        dialer,
 	}
 
-	clientset, err := kubernetes.NewForConfig(restConfig)
+	clientSet, err := kubernetes.NewForConfig(restConfig)
 	if err != nil {
 		return "", fmt.Errorf("error creating clientset: %v", err)
 	}
 
-	return util.GenerateServiceAccountToken(clientset)
+	return util.GenerateServiceAccountToken(clientSet)
 }
 
 func (e *eksOperatorController) getAccessToken(cluster *mgmtv3.Cluster) (string, error) {

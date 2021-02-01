@@ -103,6 +103,10 @@ func Register(ctx context.Context, management *config.ManagementContext) {
 }
 
 func (p *Provisioner) Remove(cluster *v3.Cluster) (runtime.Object, error) {
+	if cluster.Spec.AKSConfig != nil {
+		logrus.Debugf("AKS cluster [%s] will be managed by aks-operator-controller, skipping remove", cluster.Name)
+		return cluster, nil
+	}
 	if cluster.Spec.EKSConfig != nil {
 		logrus.Debugf("EKS cluster [%s] will be managed by eks-operator-controller, skipping remove", cluster.Name)
 		return cluster, nil
@@ -132,6 +136,10 @@ func (p *Provisioner) Remove(cluster *v3.Cluster) (runtime.Object, error) {
 }
 
 func (p *Provisioner) Updated(cluster *v3.Cluster) (runtime.Object, error) {
+	if cluster.Spec.AKSConfig != nil {
+		logrus.Debugf("AKS cluster [%s] will be managed by aks-operator-controller, skipping update", cluster.Name)
+		return cluster, nil
+	}
 	if cluster.Spec.EKSConfig != nil {
 		logrus.Debugf("EKS cluster [%s] will be managed by eks-operator-controller, skipping update", cluster.Name)
 		return cluster, nil
@@ -342,6 +350,10 @@ func (p *Provisioner) machineChanged(key string, machine *v3.Node) (runtime.Obje
 }
 
 func (p *Provisioner) Create(cluster *v3.Cluster) (runtime.Object, error) {
+	if cluster.Spec.AKSConfig != nil {
+		logrus.Debugf("AKS cluster [%s] will be managed by aks-operator-controller, skipping create", cluster.Name)
+		return cluster, nil
+	}
 	if cluster.Spec.EKSConfig != nil {
 		logrus.Debugf("EKS cluster [%s] will be managed by eks-operator-controller, skipping create", cluster.Name)
 		return cluster, nil
@@ -757,6 +769,9 @@ func GetDriver(cluster *v3.Cluster, driverLister v3.KontainerDriverLister) (stri
 			return "", err
 		}
 	}
+	if cluster.Spec.AKSConfig != nil {
+    	return apimgmtv3.ClusterDriverAKS, nil
+  	}
 
 	if cluster.Spec.EKSConfig != nil {
 		return apimgmtv3.ClusterDriverEKS, nil

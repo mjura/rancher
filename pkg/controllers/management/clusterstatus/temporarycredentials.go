@@ -31,11 +31,17 @@ func (cd *clusterAnnotations) sync(key string, cluster *v3.Cluster) (runtime.Obj
 	}
 
 	if genericConfig := cluster.Spec.GenericEngineConfig; genericConfig != nil {
+		fmt.Printf("BACADebug temporarycredentials before azurekubernetesservice check \n")
+		aksConfig := *genericConfig
+		if aksConfig["driverName"] != "azurekubernetesservice" {
+			return nil, nil
+		}
 		eksConfig := *genericConfig
 		if eksConfig["driverName"] != "amazonelasticcontainerservice" {
 			return nil, nil
 		}
 
+		fmt.Printf("BACADebug temporarycredentials sessionToken \n")
 		newValue := strconv.FormatBool(eksConfig["sessionToken"] != "" && eksConfig["sessionToken"] != nil)
 		original := cluster
 		cluster = original.DeepCopy()
