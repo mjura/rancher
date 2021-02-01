@@ -93,6 +93,7 @@ var (
 	IgnoreNodeName                    = NewSetting("ignore-node-name", "") // nodes to ignore when syncing v1.node to v3.node
 	NoDefaultAdmin                    = NewSetting("no-default-admin", "")
 	RestrictedDefaultAdmin            = NewSetting("restricted-default-admin", "false") // When bootstrapping the admin for the first time, give them the global role restricted-admin
+	AKSUpstreamRefreshCron            = NewSetting("aks-refresh-cron", "*/5 * * * *")
 	EKSUpstreamRefreshCron            = NewSetting("eks-refresh-cron", "*/5 * * * *")
 	HideLocalCluster                  = NewSetting("hide-local-cluster", "false")
 )
