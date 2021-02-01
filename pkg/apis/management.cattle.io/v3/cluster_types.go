@@ -5,6 +5,7 @@ import (
 	"encoding/gob"
 	"strings"
 
+	aksv1 "github.com/rancher/aks-operator/pkg/apis/aks.cattle.io/v1"
 	eksv1 "github.com/rancher/eks-operator/pkg/apis/eks.cattle.io/v1"
 	"github.com/rancher/norman/condition"
 	"github.com/rancher/norman/types"
@@ -76,6 +77,7 @@ const (
 	ClusterDriverK3s      = "k3s"
 	ClusterDriverK3os     = "k3os"
 	ClusterDriverRke2     = "rke2"
+	ClusterDriverAKS      = "AKS"
 	ClusterDriverEKS      = "EKS"
 	ClusterDriverRancherD = "rancherd"
 )
@@ -125,6 +127,7 @@ type ClusterSpec struct {
 	AzureKubernetesServiceConfig        *MapStringInterface         `json:"azureKubernetesServiceConfig,omitempty"`
 	AmazonElasticContainerServiceConfig *MapStringInterface         `json:"amazonElasticContainerServiceConfig,omitempty"`
 	GenericEngineConfig                 *MapStringInterface         `json:"genericEngineConfig,omitempty"`
+	AKSConfig							*aksv1.AKSClusterConfigSpec `json:"aksConfig,omitempty"`
 	EKSConfig                           *eksv1.EKSClusterConfigSpec `json:"eksConfig,omitempty"`
 	ClusterTemplateName                 string                      `json:"clusterTemplateName,omitempty" norman:"type=reference[clusterTemplate],nocreate,noupdate"`
 	ClusterTemplateRevisionName         string                      `json:"clusterTemplateRevisionName,omitempty" norman:"type=reference[clusterTemplateRevision]"`
@@ -169,6 +172,7 @@ type ClusterStatus struct {
 	CertificatesExpiration               map[string]CertExpiration   `json:"certificatesExpiration,omitempty"`
 	ScheduledClusterScanStatus           *ScheduledClusterScanStatus `json:"scheduledClusterScanStatus,omitempty"`
 	CurrentCisRunName                    string                      `json:"currentCisRunName,omitempty"`
+	AKSStatus                            AKSStatus                   `json:"aksStatus,omitempty" norman:"nocreate,noupdate"`
 	EKSStatus                            EKSStatus                   `json:"eksStatus,omitempty" norman:"nocreate,noupdate"`
 }
 
@@ -346,6 +350,14 @@ type SaveAsTemplateInput struct {
 type SaveAsTemplateOutput struct {
 	ClusterTemplateName         string `json:"clusterTemplateName,omitempty"`
 	ClusterTemplateRevisionName string `json:"clusterTemplateRevisionName,omitempty"`
+}
+
+type AKSStatus struct {
+	UpstreamSpec          *aksv1.AKSClusterConfigSpec `json:"upstreamSpec"`
+	VirtualNetwork        string                      `json:"virtualNetwork"`
+	Subnets               []string                    `json:"subnets"`
+	SecurityGroups        []string                    `json:"securityGroups"`
+	PrivateRequiresTunnel *bool                       `json:"privateRequiresTunnel"`
 }
 
 type EKSStatus struct {
