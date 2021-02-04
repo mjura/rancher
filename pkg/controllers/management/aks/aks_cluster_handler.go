@@ -120,6 +120,7 @@ func (e *aksOperatorController) onClusterChange(key string, cluster *mgmtv3.Clus
 		return cluster, nil
 	}
 
+	// Temporrary disabled
 	if err := e.deployAKSOperator(); err != nil {
 		failedToDeployAKSOperatorErr := "failed to deploy aks-operator: %v"
 		var conditionErr error

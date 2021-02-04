@@ -774,6 +774,10 @@ github.com/mjura/aks-operator v0.0.0-20210202143528-5a793c7dcccc h1:XWjfzFrAO4YD
 github.com/mjura/aks-operator v0.0.0-20210202143528-5a793c7dcccc/go.mod h1:nYC2lpazbBlHHQqjZksVmFtfTSl0H7IPkTNgTr1ilAY=
 github.com/mjura/aks-operator v0.0.0-20210202150631-9ed046484312 h1:UBGi2Z7SRHZ2BiwfxvvRbyVXb5KJdBlILEDM2IvWq04=
 github.com/mjura/aks-operator v0.0.0-20210202150631-9ed046484312/go.mod h1:nYC2lpazbBlHHQqjZksVmFtfTSl0H7IPkTNgTr1ilAY=
+github.com/mjura/aks-operator v0.0.0-20210204122316-a2098f7408ab h1:29uFV2I81AxRB6ivVLcFaP3AuzWTbPJw6NbxIEMVqFE=
+github.com/mjura/aks-operator v0.0.0-20210204122316-a2098f7408ab/go.mod h1:nYC2lpazbBlHHQqjZksVmFtfTSl0H7IPkTNgTr1ilAY=
+github.com/mjura/aks-operator v0.0.0-20210204130219-1e1acc36e366 h1:Qq+GjHybaDaoj6cianyZktr4lHBQ1K0x6/iCfIL0X4Y=
+github.com/mjura/aks-operator v0.0.0-20210204130219-1e1acc36e366/go.mod h1:nYC2lpazbBlHHQqjZksVmFtfTSl0H7IPkTNgTr1ilAY=
 github.com/moby/ipvs v1.0.1/go.mod h1:2pngiyseZbIKXNv7hsKj3O9UEz30c53MT9005gt2hxQ=
 github.com/moby/term v0.0.0-20200312100748-672ec06f55cd h1:aY7OQNf2XqY/JQ6qREWamhI/81os/agb2BAGpcx5yWI=
 github.com/moby/term v0.0.0-20200312100748-672ec06f55cd/go.mod h1:DdlQx2hp0Ss5/fLikoLlEeIYiATotOjgB//nb973jeo=

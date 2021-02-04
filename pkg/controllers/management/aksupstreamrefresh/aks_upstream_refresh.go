@@ -151,7 +151,7 @@ func (e *aksRefreshController) refreshClusterUpstreamSpec(cluster *mgmtv3.Cluste
 
 func GetComparableUpstreamSpec(secretsCache wranglerv1.SecretCache, cluster *mgmtv3.Cluster) (*v1.AKSClusterConfigSpec, error) {
 	ctx := context.Background()
-	upstreamSpec, err := controller.buildUpstreamClusterState(ctx, secretsCache, *cluster.Spec.AKSConfig)
+	upstreamSpec, err := controller.BuildUpstreamClusterState(ctx, secretsCache, *cluster.Spec.AKSConfig)
 	if err != nil {
 		return nil, err
 	}

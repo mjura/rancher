@@ -8,8 +8,8 @@ replace (
 	github.com/knative/pkg => github.com/rancher/pkg v0.0.0-20190514055449-b30ab9de040e
 	github.com/matryer/moq => github.com/rancher/moq v0.0.0-20200712062324-13d1f37d2d77
 	github.com/opencontainers/runc => github.com/opencontainers/runc v1.0.0-rc10
-	github.com/rancher/aks-operator => github.com/mjura/aks-operator v0.0.0-20210202150631-9ed046484312
- 	github.com/rancher/aks-operator/controller => github.com/mjura/aks-operator/controller v0.0.0-20210202150631-9ed046484312
+	github.com/rancher/aks-operator => github.com/mjura/aks-operator v0.0.0-20210204130219-1e1acc36e366
+ 	github.com/rancher/aks-operator/controller => github.com/mjura/aks-operator/controller v0.0.0-20210204130219-1e1acc36e366
 	github.com/rancher/rancher/pkg/apis => ./pkg/apis
 	github.com/rancher/rancher/pkg/client => ./pkg/client
 	golang.org/x/sys => golang.org/x/sys v0.0.0-20190921190940-14da1ac737cc // This is because docker/docker/pkg/archive has a dependency on an old x/sys
@@ -89,7 +89,7 @@ require (
 	github.com/prometheus/client_golang v1.7.1
 	github.com/prometheus/client_model v0.2.0
 	github.com/prometheus/common v0.10.0
-	github.com/rancher/aks-operator v0.0.0-20210202150631-9ed046484312
+	github.com/rancher/aks-operator v0.0.0-20210204130219-1e1acc36e366
 	github.com/rancher/apiserver v0.0.0-20201023000256-1a0a904f9197
 	github.com/rancher/dynamiclistener v0.2.1-0.20200910203214-85f32491cb09
 	github.com/rancher/eks-operator v1.0.6-rc1
