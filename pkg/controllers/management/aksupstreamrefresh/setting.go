@@ -40,4 +40,3 @@ func sync(key string, obj *v3.Setting) (*v3.Setting, error) {
 	aksUpstreamRefresher.refreshCronJob.Start()
 	return nil, nil
 }
-

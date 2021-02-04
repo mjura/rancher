@@ -475,7 +475,7 @@ func (e *aksOperatorController) recordCAAndAPIEndpoint(cluster *mgmtv3.Cluster) 
 // generateAndSetServiceAccount uses the API endpoint and CA cert to generate a service account token. The token is then copied to the cluster status.
 func (e *aksOperatorController) generateAndSetServiceAccount(cluster *mgmtv3.Cluster) (*mgmtv3.Cluster, error) {
 
-	restConfig,err  := e.getKubeConfig(cluster)
+	restConfig, err := e.getKubeConfig(cluster)
 	if err != nil {
 		return cluster, err
 	}
@@ -620,7 +620,7 @@ func (e *aksOperatorController) deployAKSOperator() error {
 func (e *aksOperatorController) generateSATokenWithPublicAPI(cluster *mgmtv3.Cluster) (string, *bool, error) {
 	var publicAccess *bool
 
-	restConfig,err  := e.getKubeConfig(cluster)
+	restConfig, err := e.getKubeConfig(cluster)
 	serviceToken, err := generateSAToken(restConfig)
 	if err != nil {
 		var dnsError *net.DNSError
@@ -722,4 +722,3 @@ func generateValuesYaml() (string, error) {
 
 	return string(valuesYaml), nil
 }
-
