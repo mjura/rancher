@@ -2,6 +2,8 @@ package aks
 
 import (
 	"context"
+	"github.com/Azure/go-autorest/autorest/to"
+
 	//"encoding/base64"
 	stderrors "errors"
 	"fmt"
@@ -11,7 +13,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/aws/aws-sdk-go/aws"
 	//"github.com/aws/aws-sdk-go/aws/awserr"
 	"github.com/rancher/aks-operator/controller"
 	aksv1 "github.com/rancher/aks-operator/pkg/apis/aks.cattle.io/v1"
@@ -120,6 +121,7 @@ func (e *aksOperatorController) onClusterChange(key string, cluster *mgmtv3.Clus
 		return cluster, nil
 	}
 
+	/*
 	// Temporrary disabled
 	if err := e.deployAKSOperator(); err != nil {
 		failedToDeployAKSOperatorErr := "failed to deploy aks-operator: %v"
@@ -137,7 +139,9 @@ func (e *aksOperatorController) onClusterChange(key string, cluster *mgmtv3.Clus
 		}
 		return cluster, err
 	}
+	*/
 
+	fmt.Printf("[AKS] BACADebug cluster.Status.Driver \n")
 	// set driver name
 	if cluster.Status.Driver == "" {
 		cluster = cluster.DeepCopy()
@@ -151,6 +155,7 @@ func (e *aksOperatorController) onClusterChange(key string, cluster *mgmtv3.Clus
 
 	// get aks Cluster Config, if it does not exist, create it
 	aksClusterConfigDynamic, err := e.dynamicClient.Namespace(namespace.GlobalNamespace).Get(context.TODO(), cluster.Name, v1.GetOptions{})
+	fmt.Printf("[AKS] BACADebug aksClusterConfigDynamic err %v \n", err)
 	if err != nil {
 		if !errors.IsNotFound(err) {
 			return cluster, err
@@ -191,6 +196,7 @@ func (e *aksOperatorController) onClusterChange(key string, cluster *mgmtv3.Clus
 	if strings.Contains(failureMessage, "403") {
 		failureMessage = fmt.Sprintf("cannot access aks, check cloud credential: %s", failureMessage)
 	}
+	fmt.Printf("[AKS] BACADebug switch phase \n")
 	switch phase {
 	case "creating":
 		// set provisioning to unknown
@@ -218,6 +224,22 @@ func (e *aksOperatorController) onClusterChange(key string, cluster *mgmtv3.Clus
 		logrus.Infof("waiting for cluster AKS [%s] create failure to be resolved", cluster.Name)
 		return e.setFalse(cluster, apimgmtv3.ClusterConditionProvisioned, failureMessage)
 	case "active":
+		fmt.Printf("[AKS] BACADebug step 1 \n")
+		if cluster.Status.AKSStatus.UpstreamSpec == nil {
+			// non imported clusters will have already had upstream spec set
+			return e.setInitialUpstreamSpec(cluster)
+		}
+
+		if apimgmtv3.ClusterConditionPending.IsUnknown(cluster) {
+			cluster = cluster.DeepCopy()
+			apimgmtv3.ClusterConditionPending.True(cluster)
+			cluster, err = e.clusterClient.Update(cluster)
+			if err != nil {
+				return cluster, err
+			}
+		}
+		fmt.Printf("[AKS] BACADebug step 1 end \n")
+
 		if cluster.Spec.AKSConfig.Imported {
 			if cluster.Status.AKSStatus.UpstreamSpec == nil {
 				// non imported clusters will have already had upstream spec set
@@ -233,7 +255,8 @@ func (e *aksOperatorController) onClusterChange(key string, cluster *mgmtv3.Clus
 				}
 			}
 		}
-
+		fmt.Printf("[AKS] BACADebug step 2 \n")
+		/*
 		addNgMessage := "Cannot deploy agent without nodegroups. Add a nodegroup."
 		noNodeGroupsOnSpec := len(cluster.Spec.AKSConfig.NodeGroups) == 0
 		noNodeGroupsOnUpstreamSpec := len(cluster.Status.AKSStatus.UpstreamSpec.NodeGroups) == 0
@@ -252,7 +275,8 @@ func (e *aksOperatorController) onClusterChange(key string, cluster *mgmtv3.Clus
 				}
 			}
 		}
-
+		*/
+		fmt.Printf("[AKS] BACADebug step 3 \n")
 		cluster, err = e.setTrue(cluster, apimgmtv3.ClusterConditionProvisioned, "")
 		if err != nil {
 			return cluster, err
@@ -283,11 +307,16 @@ func (e *aksOperatorController) onClusterChange(key string, cluster *mgmtv3.Clus
 				}
 			}
 		}
-
+		fmt.Printf("[AKS] BACADebug step 4 \n")
+		/*
 		if cluster.Status.APIEndpoint == "" {
 			return e.recordCAAndAPIEndpoint(cluster)
 		}
+		*/
 
+		fmt.Printf("[AKS] BACADebug cluster.Status.AKSStatus.PrivateRequiresTunnel %v PublicAccess %v \n", cluster.Status.AKSStatus.PrivateRequiresTunnel, cluster.Status.AKSStatus.UpstreamSpec.PublicAccess)
+
+		/*
 		if cluster.Status.AKSStatus.PrivateRequiresTunnel == nil && !*cluster.Status.AKSStatus.UpstreamSpec.PublicAccess {
 			// Check to see if we can still use the public API endpoint even though
 			// the cluster has private-only access
@@ -302,8 +331,10 @@ func (e *aksOperatorController) onClusterChange(key string, cluster *mgmtv3.Clus
 				return cluster, err
 			}
 		}
-
+		*/
+		fmt.Printf("[AKS] BACADebug cluster.Status.ServiceAccountToken %v \n", cluster.Status.ServiceAccountToken)
 		if cluster.Status.ServiceAccountToken == "" {
+			fmt.Printf("[AKS] BACADebug step 5 generateAndSetServiceAccount \n")
 			cluster, err = e.generateAndSetServiceAccount(cluster)
 			if err != nil {
 				var statusErr error
@@ -626,10 +657,10 @@ func (e *aksOperatorController) generateSATokenWithPublicAPI(cluster *mgmtv3.Clu
 	if err != nil {
 		var dnsError *net.DNSError
 		if stderrors.As(err, &dnsError) && !dnsError.IsTemporary {
-			return "", aws.Bool(true), nil
+			return "", to.BoolPtr(true), nil
 		}
 	} else {
-		publicAccess = aws.Bool(false)
+		publicAccess = to.BoolPtr(false)
 	}
 
 	return serviceToken, publicAccess, err
