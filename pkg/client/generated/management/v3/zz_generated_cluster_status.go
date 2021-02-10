@@ -2,6 +2,7 @@ package client
 
 const (
 	ClusterStatusType                                      = "clusterStatus"
+	ClusterStatusFieldAKSStatus                            = "aksStatus"
 	ClusterStatusFieldAPIEndpoint                          = "apiEndpoint"
 	ClusterStatusFieldAgentFeatures                        = "agentFeatures"
 	ClusterStatusFieldAgentImage                           = "agentImage"
@@ -32,6 +33,7 @@ const (
 )
 
 type ClusterStatus struct {
+	AKSStatus                            *AKSStatus                  `json:"aksStatus,omitempty" yaml:"aksStatus,omitempty"`
 	APIEndpoint                          string                      `json:"apiEndpoint,omitempty" yaml:"apiEndpoint,omitempty"`
 	AgentFeatures                        map[string]bool             `json:"agentFeatures,omitempty" yaml:"agentFeatures,omitempty"`
 	AgentImage                           string                      `json:"agentImage,omitempty" yaml:"agentImage,omitempty"`

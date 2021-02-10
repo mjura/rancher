@@ -121,7 +121,7 @@ func (e *aksOperatorController) onClusterChange(key string, cluster *mgmtv3.Clus
 		return cluster, nil
 	}
 
-	/*
+	fmt.Printf("BACADebug before deployAKSOperator")
 	// Temporrary disabled
 	if err := e.deployAKSOperator(); err != nil {
 		failedToDeployAKSOperatorErr := "failed to deploy aks-operator: %v"
@@ -139,7 +139,7 @@ func (e *aksOperatorController) onClusterChange(key string, cluster *mgmtv3.Clus
 		}
 		return cluster, err
 	}
-	*/
+
 
 	fmt.Printf("[AKS] BACADebug cluster.Status.Driver \n")
 	// set driver name
@@ -312,6 +312,7 @@ func (e *aksOperatorController) onClusterChange(key string, cluster *mgmtv3.Clus
 		if cluster.Status.APIEndpoint == "" {
 			return e.recordCAAndAPIEndpoint(cluster)
 		}
+
 		*/
 
 		fmt.Printf("[AKS] BACADebug cluster.Status.AKSStatus.PrivateRequiresTunnel %v PublicAccess %v \n", cluster.Status.AKSStatus.PrivateRequiresTunnel, cluster.Status.AKSStatus.UpstreamSpec.PublicAccess)
@@ -333,6 +334,8 @@ func (e *aksOperatorController) onClusterChange(key string, cluster *mgmtv3.Clus
 		}
 		*/
 		fmt.Printf("[AKS] BACADebug cluster.Status.ServiceAccountToken %v \n", cluster.Status.ServiceAccountToken)
+		cluster, err = e.generateAndSetServiceAccount(cluster)
+		fmt.Printf("[AKS] BACADebug generateAndSetServiceAccount %v \n", err)
 		if cluster.Status.ServiceAccountToken == "" {
 			fmt.Printf("[AKS] BACADebug step 5 generateAndSetServiceAccount \n")
 			cluster, err = e.generateAndSetServiceAccount(cluster)
@@ -359,8 +362,8 @@ func (e *aksOperatorController) onClusterChange(key string, cluster *mgmtv3.Clus
 		if err != nil {
 			return cluster, err
 		}
-
-		return e.setTrue(cluster, apimgmtv3.ClusterConditionUpdated, "")
+		fmt.Printf("[AKS] BACADebug before and of active phase setTrue\n")
+		return e.setTrue(cluster, apimgmtv3.ClusterConditionUpdated, "BACADebug")
 	case "updating":
 		cluster, err = e.setTrue(cluster, apimgmtv3.ClusterConditionProvisioned, "")
 		if err != nil {
@@ -469,7 +472,9 @@ func (e *aksOperatorController) recordCAAndAPIEndpoint(cluster *mgmtv3.Cluster) 
 	var caSecret *corev1.Secret
 	err := wait.ExponentialBackoff(backoff, func() (bool, error) {
 		var err error
+		fmt.Printf("BACADebug pring namespace.GlobalNamespace %s cluster.Name %s \n", namespace.GlobalNamespace, cluster.Name)
 		caSecret, err = e.secretsCache.Get(namespace.GlobalNamespace, cluster.Name)
+		fmt.Printf("BACADebug e.secretsCache.Get %v \n", err)
 		if err != nil {
 			if !errors.IsNotFound(err) {
 				return false, err
@@ -520,6 +525,7 @@ func (e *aksOperatorController) generateAndSetServiceAccount(cluster *mgmtv3.Clu
 	cluster.Status.ServiceAccountToken = saToken
 	return e.clusterClient.Update(cluster)
 }
+
 
 // buildAKSCCCreateObject returns an object that can be used with the kubernetes dynamic client to
 // create an AKSClusterConfig that matches the spec contained in the cluster's AKSConfig.
@@ -667,12 +673,12 @@ func (e *aksOperatorController) generateSATokenWithPublicAPI(cluster *mgmtv3.Clu
 }
 
 func generateSAToken(restConfig *rest.Config) (string, error) {
-	clientset, err := kubernetes.NewForConfig(restConfig)
+	clientSet, err := kubernetes.NewForConfig(restConfig)
 	if err != nil {
 		return "", fmt.Errorf("error creating clientset: %v", err)
 	}
 
-	return util.GenerateServiceAccountToken(clientset)
+	return util.GenerateServiceAccountToken(clientSet)
 }
 
 func (e *aksOperatorController) getKubeConfig(cluster *mgmtv3.Cluster) (*rest.Config, error) {

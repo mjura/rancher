@@ -21,6 +21,7 @@ const (
 	AKSClusterConfigSpecFieldNetworkServiceCIDR          = "serviceCidr"
 	AKSClusterConfigSpecFieldNodeGroups                  = "nodeGroups"
 	AKSClusterConfigSpecFieldPrivateAccess               = "privateAccess"
+	AKSClusterConfigSpecFieldPublicAccess                = "publicAccess"
 	AKSClusterConfigSpecFieldPublicAccessSources         = "publicAccessSources"
 	AKSClusterConfigSpecFieldResourceGroup               = "resourceGroup"
 	AKSClusterConfigSpecFieldResourceLocation            = "resourceLocation"
@@ -52,6 +53,7 @@ type AKSClusterConfigSpec struct {
 	NetworkServiceCIDR          string            `json:"serviceCidr,omitempty" yaml:"serviceCidr,omitempty"`
 	NodeGroups                  []NodeGroup       `json:"nodeGroups,omitempty" yaml:"nodeGroups,omitempty"`
 	PrivateAccess               *bool             `json:"privateAccess,omitempty" yaml:"privateAccess,omitempty"`
+	PublicAccess                *bool             `json:"publicAccess,omitempty" yaml:"publicAccess,omitempty"`
 	PublicAccessSources         []string          `json:"publicAccessSources,omitempty" yaml:"publicAccessSources,omitempty"`
 	ResourceGroup               string            `json:"resourceGroup,omitempty" yaml:"resourceGroup,omitempty"`
 	ResourceLocation            string            `json:"resourceLocation,omitempty" yaml:"resourceLocation,omitempty"`

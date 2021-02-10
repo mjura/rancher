@@ -120,9 +120,18 @@ func (m *Manager) markUnavailable(clusterName string) {
 }
 
 func (m *Manager) start(ctx context.Context, cluster *v3.Cluster, controllers, clusterOwner bool) (*record, error) {
+
 	obj, ok := m.controllers.Load(cluster.UID)
+	/*
+	if cluster.Name != "local" {
+		fmt.Printf("BACADebug clustermanager/manager.go clusterUID %v cluster.Name %s \n", cluster.UID, cluster.Name)
+		fmt.Printf("BACADebug clustermanager/manager.go m.controllers.Load %v \n", ok)
+	}
+	*/
+
 	if ok {
 		if !m.changed(obj.(*record), cluster, controllers, clusterOwner) {
+			//fmt.Printf("BACADebug clustermanager/manager.go  m.startController clusterOwner %v \n", clusterOwner)
 			return obj.(*record), m.startController(obj.(*record), controllers, clusterOwner)
 		}
 		m.Stop(obj.(*record).clusterRec)
@@ -169,6 +178,7 @@ func (m *Manager) startController(r *record, controllers, clusterOwner bool) err
 
 func (m *Manager) changed(r *record, cluster *v3.Cluster, controllers, clusterOwner bool) bool {
 	existing := r.clusterRec
+	//fmt.Printf("BACADebug clustermanager/manager.go change existing.Status.ServiceAccountToken %v cluster.Status.ServiceAccountToken %v \n", existing.Status.ServiceAccountToken, cluster.Status.ServiceAccountToken)
 	if existing.Status.APIEndpoint != cluster.Status.APIEndpoint ||
 		existing.Status.ServiceAccountToken != cluster.Status.ServiceAccountToken ||
 		existing.Status.CACert != cluster.Status.CACert ||

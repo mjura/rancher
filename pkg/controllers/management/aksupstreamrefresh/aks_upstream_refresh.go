@@ -2,6 +2,7 @@ package aksupstreamrefresh
 
 import (
 	"context"
+	"github.com/Azure/go-autorest/autorest/to"
 	"reflect"
 
 	"github.com/rancher/aks-operator/controller"
@@ -157,9 +158,18 @@ func GetComparableUpstreamSpec(secretsCache wranglerv1.SecretCache, cluster *mgm
 	}
 
 	upstreamSpec.DisplayName = cluster.Spec.AKSConfig.DisplayName
+	upstreamSpec.ClusterName = cluster.Spec.AKSConfig.ClusterName
 	upstreamSpec.ResourceLocation = cluster.Spec.AKSConfig.ResourceLocation
+	upstreamSpec.ResourceGroup = cluster.Spec.AKSConfig.ResourceGroup
 	upstreamSpec.AzureCredentialSecret = cluster.Spec.AKSConfig.AzureCredentialSecret
+	upstreamSpec.SubscriptionID = cluster.Spec.AKSConfig.SubscriptionID
+	upstreamSpec.BaseURL = cluster.Spec.AKSConfig.BaseURL
+	upstreamSpec.AuthBaseURL = cluster.Spec.AKSConfig.AuthBaseURL
 	upstreamSpec.Imported = cluster.Spec.AKSConfig.Imported
+
+	//BACADebug
+	upstreamSpec.PublicAccess = to.BoolPtr(true)
+	upstreamSpec.PrivateAccess = to.BoolPtr(false)
 
 	//upstreamSpec.Subnets = cluster.Spec.AKSConfig.Subnets
 	//upstreamSpec.SecurityGroups = cluster.Spec.AKSConfig.SecurityGroups

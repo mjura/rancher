@@ -769,6 +769,9 @@ func GetDriver(cluster *v3.Cluster, driverLister v3.KontainerDriverLister) (stri
 			return "", err
 		}
 	}
+	if cluster.Spec.AKSConfig != nil {
+    	return apimgmtv3.ClusterDriverAKS, nil
+  	}
 
 	if cluster.Spec.EKSConfig != nil {
 		return apimgmtv3.ClusterDriverEKS, nil
