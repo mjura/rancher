@@ -141,10 +141,18 @@ func (h *handler) getCloudCredentials(req *http.Request, cap *Capabilities, cred
 		logrus.Debugf("[GKE] error accessing cloud credential %s", credID)
 		return fmt.Errorf("error accessing cloud credential %s", credID)
 	}
-	cap.Credentials = string(cc.Data["authEncodedJson"])
+	cap.Credentials = string(cc.Data["googlecredentialConfig-authEncodedJson"])
 	region := req.URL.Query().Get("region")
 	if region != "" {
 		cap.Region = region
+	}
+	zone := req.URL.Query().Get("zone")
+	if zone != "" {
+		cap.Zone = zone
+	}
+	projectId := req.URL.Query().Get("projectId")
+	if projectId != "" {
+		cap.ProjectID = projectId
 	}
 
 	return nil
